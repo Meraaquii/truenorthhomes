@@ -1,9 +1,0 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Stack+Sans+Headline:wght@200..700&display=swap");
-
-.roboto {
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400; /* You can change: 100, 300, 400, 500, 700, 900 */
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
-}
