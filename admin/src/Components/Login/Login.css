@@ -89,6 +89,25 @@
   text-decoration: underline;
 }
 
+.powered-by {
+  margin-top: 2rem;
+  text-align: right;
+  font-size: 0.875rem;
+  color: #1f1e1c;
+}
+
+.meraaquii-link {
+  color: #e73e3f;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  text-decoration: underline;
+}
+
+.meraaquii-link:hover {
+  color: #8d1b1b;
+  text-decoration: underline;
+}
+
 /* .logo-container {
   position: absolute;
   top: 3.5rem;

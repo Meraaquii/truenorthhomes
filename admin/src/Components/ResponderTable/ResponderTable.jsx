@@ -153,7 +153,7 @@ function ResponderTable({
               onClick={getCustomerDetails}
               disabled={loading}
             >
-              {loading ? "Refreshing..." : <MdOutlineRefresh />}
+              {loading ? <MdOutlineRefresh /> : <MdOutlineRefresh />}
             </button>
             <select
               className="export-select"

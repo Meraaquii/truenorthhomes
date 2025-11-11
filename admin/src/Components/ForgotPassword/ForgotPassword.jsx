@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import logo from "../../assets/logo-default-black.png";
+import logo from "../../assets/True North.png";
 import toast from "react-hot-toast";
 import "./ForgotPassword.css";
 import { API } from "../Context/Context";

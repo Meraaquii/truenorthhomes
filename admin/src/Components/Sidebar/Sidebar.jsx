@@ -93,13 +93,13 @@ function Sidebar({ sidebarOpen, setSidebarOpen, activeTab, setActiveTab }) {
           <span className="nav-text">Responder List</span>
         </button>
 
-        <button
+        {/* <button
           className={`nav-item ${activeTab === "settings" ? "active" : ""}`}
           onClick={() => handleNavClick("settings")}
         >
           <RiSettingsLine className="nav-icon" />
           <span className="nav-text">Settings</span>
-        </button>
+        </button> */}
       </nav>
     </aside>
   );

@@ -93,7 +93,7 @@ function ResponderList() {
   const getCustomerDetails = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API}/responder_list`);
+      const response = await fetch(`${API}/getResponderList`);
       const result = await response.json();
       if (result.status === 1) {
         setCustomers(result.data);

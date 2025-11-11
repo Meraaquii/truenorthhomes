@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -5,29 +6,42 @@ import {
   Navigate,
 } from "react-router-dom";
 import Login from "./Components/Login/Login";
-import { Toaster } from "react-hot-toast";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
+import ResponderList from "./Components/ResponderList/ResponderList";
+import ProtectedRoute from "./Components/Login/ProtectRoute";
+import Sidebar from "./Components/Sidebar/Sidebar";
+import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./Components/Context/AuthContext";
 import "./Components/styles/variables.css";
 import "./Components/styles/global.css";
-import ResponderList from "./Components/ResponderList/ResponderList";
+import Settings from "./Components/Settings/Settings";
 
 function App() {
-  return (
-    <>
-      <AuthProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<ResponderList />} />
-            <Route path="/forgotPassword" element={<ForgotPassword />} />
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </Router>
+  return (
+    <Router>
+      <AuthProvider>
+        <Toaster />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+
+          <Route
+            path="/dashboard/*"
+            element={
+              <ProtectedRoute>
+                <Routes>
+                  <Route path="responderList" element={<ResponderList />} />
+                  <Route path="settings" element={<Settings />} />
+                </Routes>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </AuthProvider>
-      <Toaster />
-    </>
+    </Router>
   );
 }
 

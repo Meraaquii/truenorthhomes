@@ -4,14 +4,13 @@ import "./Login.css";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { API } from "../Context/Context";
-//import bg from "../../assets/hero-bg.jpg";
 import logo from "../../assets/True North.png";
-//import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../Context/AuthContext"; // Uncomment this
 
 function Login() {
   const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-  //const { setIsAuthenticated, setUserRole } = useContext(AuthContext);
+  const { setIsAuthenticated, setUserRole } = useContext(AuthContext); // Uncomment this
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -25,19 +24,17 @@ function Login() {
       const response = await axios.post(`${API}/login`, data);
       if (response.data.status === 1) {
         localStorage.setItem("auth", JSON.stringify(response.data));
+
+        setIsAuthenticated(true);
+
         toast.success(response.data.message);
-        //window.location.reload();
-        navigate("dashboard");
-        // setIsAuthenticated(true);
-        // setUserRole(role);
-        // localStorage.setItem("auth", role);
+        navigate("/dashboard/responderList", { replace: true });
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
-      if (error) {
-        toast.error("An unexpected error occurred.");
-      }
+      console.error("Login error:", error);
+      toast.error("An unexpected error occurred.");
     }
   };
 
@@ -81,9 +78,15 @@ function Login() {
           <button type="submit" className="login-button">
             Login
           </button>
-          {/* <div className="forgot-link">
-            <Link to="/forgotPassword">Forgot Password?</Link>
-          </div> */}
+          <div className="powered-by">
+            powered by{" "}
+            <strong
+              className="meraaquii-link"
+              onClick={() => window.open("https://meraaquii.com//", "_blank")}
+            >
+              Meraaquii
+            </strong>
+          </div>
         </form>
       </div>
     </div>
