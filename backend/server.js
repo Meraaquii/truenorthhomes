@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const mysql = require("mysql2");
+const mysql = require("mysql2/promise");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 
@@ -11,30 +11,38 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const connection = mysql.createConnection({
+const pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
   port: process.env.MYSQL_PORT,
+  connectionLimit: 10,
 });
 
-connection.connect((err) => {
-  if (err) console.log("Database Not Connected:", err.sqlMessage);
-  else console.log("Database Connected Successfully");
-});
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log("Database Connected Successfully");
+    connection.release();
+  } catch (err) {
+    console.error("Database Not Connected:", err.message);
+  }
+})();
 
-app.post("/login", (req, res) => {
+const BASE_URL = process.env.BASE_PATH;
+
+app.post(`${BASE_URL}/login`, async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
     return res.json({ message: "Email and password are required" });
 
-  const query = "SELECT * FROM admin WHERE email = ? AND password = ?";
-  connection.query(query, [email, password], (err, results) => {
-    if (err) {
-      console.error("Database query error:", err);
-      return res.json({ message: "Database query error", error: err });
-    }
+  try {
+    const [results] = await pool.query(
+      "SELECT * FROM admin WHERE email = ? AND password = ?",
+      [email, password]
+    );
+
     if (results.length > 0) {
       return res.json({
         status: 1,
@@ -44,10 +52,13 @@ app.post("/login", (req, res) => {
     } else {
       return res.json({ status: 0, message: "Invalid email or password" });
     }
-  });
+  } catch (err) {
+    console.error("Database query error:", err);
+    return res.json({ message: "Database query error", error: err });
+  }
 });
 
-app.post("/responder_list", (req, res) => {
+app.post(`${BASE_URL}/responderList`, async (req, res) => {
   const {
     name,
     email,
@@ -81,20 +92,39 @@ app.post("/responder_list", (req, res) => {
     return res.json({ message: "All fields are required" });
   }
 
-  const employeeDataQuery = "SELECT MAX(id) as maxid FROM responder_list;";
-  connection.query(employeeDataQuery, (err, results) => {
-    if (err) {
-      console.error("Error fetching max ID:", err);
-      return res.json({ message: "Database error", error: err });
-    }
+  try {
+    const [maxResult] = await pool.query(
+      "SELECT MAX(id) AS maxid FROM responder_list"
+    );
+    const id = (maxResult[0].maxid || 0) + 1;
 
-    const id = (results[0].maxid || 0) + 1;
-    const insertQuery =
-      "INSERT INTO responder_list (id, name, email, phone, comment, enquiry_form, utm_source, utm_id, utm_campaign, utm_medium, utm_term, utm_content, ip, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const insertQuery = `
+      INSERT INTO responder_list 
+      (id, name, email, phone, comment, enquiry_form, utm_source, utm_id, utm_campaign, utm_medium, utm_term, utm_content, ip, date)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
-    connection.query(
-      insertQuery,
-      [
+    await pool.query(insertQuery, [
+      id,
+      name,
+      email,
+      phone,
+      comment,
+      enquiry_form,
+      utm_source,
+      utm_id,
+      utm_campaign,
+      utm_medium,
+      utm_term,
+      utm_content,
+      ip,
+      dateTime,
+    ]);
+
+    return res.json({
+      status: 1,
+      message: "Responder details inserted successfully",
+      data: {
         id,
         name,
         email,
@@ -108,91 +138,69 @@ app.post("/responder_list", (req, res) => {
         utm_term,
         utm_content,
         ip,
-        dateTime,
-      ],
-      (err, result) => {
-        if (err) {
-          console.error("Insert error:", err);
-          return res.json({ message: "Database insert error", error: err });
-        } else {
-          return res.json({
-            status: 1,
-            message: "Responder details inserted successfully",
-            data: {
-              id,
-              name,
-              email,
-              phone,
-              comment,
-              enquiry_form,
-              utm_source,
-              utm_id,
-              utm_campaign,
-              utm_medium,
-              utm_term,
-              utm_content,
-              ip,
-              date: dateTime,
-            },
-          });
-        }
-      }
-    );
-  });
+        date: dateTime,
+      },
+    });
+  } catch (err) {
+    console.error("Insert error:", err);
+    return res.json({ message: "Database insert error", error: err });
+  }
 });
-app.get("/notifications", (req, res) => {
-  const query = "SELECT * FROM responder_list ORDER BY created_at DESC";
-  connection.query(query, (err, results) => {
-    if (err) {
-      console.error("Database query error:", err);
-      return res.json({ message: "Database query error", error: err });
-    }
+
+app.get(`${BASE_URL}/notifications`, async (req, res) => {
+  try {
+    const [results] = await pool.query(
+      "SELECT * FROM responder_list ORDER BY created_at DESC"
+    );
     return res.json({
       status: 1,
       message: "Notifications fetched successfully",
       data: results,
     });
-  });
+  } catch (err) {
+    console.error("Database query error:", err);
+    return res.json({ message: "Database query error", error: err });
+  }
 });
 
-app.post("/forgotPassword", (req, res) => {
+app.post(`${BASE_URL}/forgotPassword`, async (req, res) => {
   const { email } = req.body;
   if (!email) return res.json({ message: "Email is required" });
 
-  const query = "SELECT * FROM user WHERE email = ?";
-  connection.query(query, [email], async (err, results) => {
-    if (err) return res.json({ message: "Database error", error: err });
+  try {
+    const [results] = await pool.query("SELECT * FROM user WHERE email = ?", [
+      email,
+    ]);
 
     if (results.length > 0) {
-      try {
-        const password = results[0].password;
-        // await sendPasswordEmail(process.env.EMAIL_USER, email, password);
-        return res.json({ status: 1, message: "Password sent to your email" });
-      } catch (err) {
-        return res.json({ message: "Failed to send email", error: err });
-      }
+      // Simulate sending password via email
+      // const password = results[0].password;
+      // await sendPasswordEmail(process.env.EMAIL_USER, email, password);
+      return res.json({ status: 1, message: "Password sent to your email" });
     } else {
       return res.json({ status: 0, message: "Email not found" });
     }
-  });
+  } catch (err) {
+    console.error("Database error:", err);
+    return res.json({ message: "Database error", error: err });
+  }
 });
 
-app.get("/responder_list", (req, res) => {
-  const query = "SELECT * FROM responder_list";
-  connection.query(query, (err, results) => {
-    if (err) {
-      console.error("Database query error:", err);
-      return res.json({ message: "Database query error", error: err });
-    }
+app.get(`${BASE_URL}/getResponderList`, async (req, res) => {
+  try {
+    const [results] = await pool.query("SELECT * FROM responder_list");
     return res.json({
       status: 1,
       message: "Responder Details retrieved successfully",
       data: results,
     });
-  });
+  } catch (err) {
+    console.error("Database query error:", err);
+    return res.json({ message: "Database query error", error: err });
+  }
 });
 
-app.post("/logout", (req, res) => {
+app.post(`${BASE_URL}/logout`, (req, res) => {
   res.json({ status: 1, message: "Logged out successfully", data: {} });
 });
 
