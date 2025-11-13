@@ -1,0 +1,276 @@
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-container {
+  background: #fff;
+  width: 60%;
+  max-height: 90vh;
+  border-radius: 16px;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  font-family: "Arial", sans-serif;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto; /* let height adjust naturally */
+  max-height: 50vh; /* optional: limit height */
+  border-radius: 16px 16px 0 0;
+  overflow: hidden;
+  background-color: #2c3e47;
+}
+
+.popup-image {
+  width: 100%;
+  height: auto; /* maintain aspect ratio */
+  object-fit: contain; /* show full image without cropping */
+  display: block;
+}
+
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+.popup-title {
+  position: absolute;
+  bottom: 20px;
+  left: 16px;
+  color: white;
+  z-index: 2;
+  margin-left: 50px;
+}
+
+.popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.popup-title h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+.popup-title p {
+  margin: 2px 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.popup-price {
+  padding: 40px 16px;
+  margin-left: 50px;
+  padding-bottom: 20px;
+}
+.popup-price h3 {
+  color: #2b3880;
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+.popup-location {
+  color: #555;
+  margin: 6px 0;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.popup-info {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #333;
+  margin-top: 6px;
+}
+.popup-info span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.icon {
+  color: #2b3880;
+}
+
+.header-logo-wrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 48%;
+  right: 5%;
+  z-index: 3;
+  background-color: #2c3e47;
+}
+
+.header-logo {
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.popup-body {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 0 16px 16px;
+}
+.popup-description {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  width: 70%;
+  margin-left: 50px;
+}
+.popup-contact {
+  position: relative;
+  bottom: 50px;
+  border-left: 2px solid #eee;
+  padding-left: 10px;
+  margin-left: -55px;
+}
+
+.popup-contact h4 {
+  margin: 0 0 16px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2b3880;
+}
+
+.contact-owner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.owner-logo-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  /* border: 1px solid #ddd; */
+}
+
+.owner-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.owner-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.owner-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2b3880;
+  margin: 0;
+}
+
+.owner-type {
+  font-size: 13px;
+  color: #777;
+  margin: 0;
+}
+
+.owner-phone {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+.call-btn {
+  margin-top: 8px;
+  background: #2b3880;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  transition: 0.2s ease;
+  position: relative;
+  left: 155px;
+  top: 50px;
+}
+.call-btn a{
+  color: white;
+}
+.call-btn:hover {
+  background: #1f2960;
+  transform: scale(1.05);
+}
+
+@media (max-width: 1024px) {
+  .popup-body {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .popup-contact {
+    border-left: none;
+    border-top: 1px solid #eee;
+
+    padding: 16px 0 0 0;
+    margin-left: 20px;
+    bottom: 0;
+  }
+}
+
+@media(max-width:720px){
+  .popup-container{
+    width:90%;
+  }
+  .header-logo-wrapper{
+    top:24%;
+  }
+  .call-btn{
+    
+  }
+}
+@media(max-width:480px){
+  .call-btn{
+    left:82%;
+    top:0;
+  }
+}
+@media(max-width:376px){
+  .popup-close{
+    top: 0;
+    right:0;
+  }
+}

@@ -1,0 +1,32 @@
+.career-txt-wrapper{
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+}
+.career-txt{
+    width:60%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+}
+.career-txt p{
+    width:70%;
+    color: #414042;
+    font-size: 20px;
+    text-align: center;
+    font-weight: 400;
+    padding-top: 60px;
+    padding-bottom: 40px;
+    line-height: 1.5;
+}
+@media(max-width:720px){
+    .career-txt{
+        width:100%;
+    }
+}
+@media(max-width:480px){
+    .career-txt p{
+        width:87%;
+    }
+}

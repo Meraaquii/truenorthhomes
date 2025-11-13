@@ -1,0 +1,103 @@
+.career-hero-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.career-hero {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.career-hero img {
+    width: 100%;
+    height: 100%;
+}
+
+.banner-txt {
+    color: white;
+    position: absolute;
+    bottom: 20%;
+    left: 20%;
+}
+
+.banner-txt h3 {
+    text-align: center;
+    color: #fff;
+    font-size: 42px;
+    font-weight: 200;
+}
+
+.banner-txt h1 {
+    font-size: 150px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+@media(max-width:720px) {
+    .career-hero-wrapper {
+        padding-top: 85px;
+    }
+
+    .banner-txt h3 {
+        font-size: 36px;
+    }
+
+    .banner-txt h1 {
+        font-size: 96px;
+    }
+
+    .banner-txt {
+        bottom: 11%;
+        left: 9%;
+    }
+}
+@media(max-width:675px){
+    .banner-txt h3 {
+        font-size: 30px;
+    }
+
+    .banner-txt h1 {
+        font-size: 85px;
+    }
+}
+@media(max-width:600px){
+    .banner-txt h3 {
+        font-size: 21px;
+    }
+
+    .banner-txt h1 {
+        font-size: 60px;
+    }
+    .banner-txt {
+        bottom: 17%;
+        left: 20%;
+    }
+}
+@media(max-width:520px){
+    .banner-txt{
+        left:16%;
+    }
+}
+@media(max-width:480px){
+    .banner-txt {
+        left: 20%;
+    }
+    .banner-txt h1 {
+        font-size: 45px;
+    }
+    .banner-txt h3{
+        font-size: 19px;
+    }
+}
+@media(max-width:408px){
+    .banner-txt {
+        left: 15%;
+    }
+}
+@media(max-width:375px){
+    .banner-txt{
+        left:13%;
+        bottom:12%;
+    }
+}

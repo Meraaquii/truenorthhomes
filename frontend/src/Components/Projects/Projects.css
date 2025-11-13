@@ -1,0 +1,99 @@
+.projects-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 60px;
+}
+
+.projects {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.project {
+  width: 50%;
+  padding: 8px;
+  border-radius: 25px;
+  box-shadow: 0px 12px 1px 0px #ccc;
+  margin: 0 10px 30px;
+  background: #273a80;
+}
+
+.project img {
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+}
+
+.project .learn-btn {
+  color: #273a80;
+  background-color: white;
+  padding: 7px 25px;
+  position: relative;
+  left: 57%;
+  top: 4%;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
+.project .learn-btn:hover {
+  background: #2ab375 !important;
+  color: #fff;
+}
+
+.project h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 20px;
+}
+
+.learn-btn a {
+  text-decoration: none;
+  color: #273a80;
+}
+
+#l1 {
+  top: 2%;
+}
+
+@media (max-width: 720px) {
+  .projects-wrapper {
+    width: 226%;
+    padding: 70px 0;
+  }
+  .projects {
+    width: 100%;
+  }
+  .project .learn-btn {
+    left: 65%;
+  }
+}
+@media (max-width: 600px) {
+  .project .learn-btn {
+    left: 58%;
+  }
+}
+@media (max-width: 503px) {
+  .project .learn-btn {
+    left: 55%;
+  }
+}
+@media (max-width: 480px) {
+  .project h3 {
+    font-size: 18px;
+  }
+  .project .learn-btn {
+    left: 42%;
+    font-size: 14px;
+  }
+}
+@media (max-width: 400px) {
+  .project .learn-btn {
+    left: 43%;
+    padding: 7px 20px;
+  }
+}

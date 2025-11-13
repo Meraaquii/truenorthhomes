@@ -1,0 +1,16 @@
+.project-hero-wrapper{
+    width:100%;
+    height:100%;
+}
+.project-hero{
+    width:100%;
+    height:100%;
+}
+.project-hero img{
+    width:100%;
+}
+@media(max-width:720px){
+    .project-hero-wrapper{
+        padding-top:85px;
+    }
+}

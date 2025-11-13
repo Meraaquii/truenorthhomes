@@ -1,0 +1,143 @@
+.experience-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #273a80;
+    color: white;
+    padding: 90px 0;
+}
+
+.experience {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.experience h1 {
+    font-weight: 400;
+    font-size: 32px;
+    text-align: center;
+}
+
+.experience .projects {
+    width: 100%;
+    padding-top: 90px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    /* transform: translateY(60%); */
+
+}
+
+.project-div {
+    width: 50%;
+    background-color: white;
+    color: #273a80;
+    border-radius: 25px;
+    box-shadow: 0px 12px 1px 0px #ccc;
+    margin: 0 10px 30px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.project-div img {
+    width: 100%;
+}
+
+.project-details h2 {
+    padding-top: 20px;
+    color: #273a80;
+    font-weight: 400;
+    position: relative;
+    right: 100%;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.view-btn {
+    margin: 15px 0;
+    background: #273a81;
+    color: #fff;
+    display: table;
+    border-radius: 35px;
+    padding: 5px 33px;
+    font-size: 15px;
+    cursor: pointer;
+    position: relative;
+    left: 141%;
+    border: none;
+}
+
+.view-btn a {
+    text-decoration: none;
+    color: white;
+}
+
+.view-btn:hover {
+    background-color: #2BB375;
+    transition: 0.5s;
+}
+
+#ongoing {
+    right: 134%;
+}
+
+#ongoing-btn {
+    left: 164%;
+}
+
+@media(max-width:720px) {
+    .experience .projects {
+        width: 160%;
+    }
+
+    .project-details h2 {
+        right: unset;
+    }
+    .view-btn{
+        left:80%;
+    }
+    #ongoing {
+        right: 59%;
+    }
+    #ongoing-btn {
+        left:95%;
+    }
+    .experience-wrapper{
+        padding:60px 0;
+    }
+}
+@media(max-width:480px){
+    .experience .projects{
+        width:200%;
+    }
+    .experience h1{
+        font-size: 24px;
+    }
+    .project-details h2{
+        font-size: 22px;
+        right:38%;
+    }
+    .view-btn {
+        left: 67%;
+    }
+    #ongoing-btn {
+        left: 67%;
+    }
+}
+@media(max-width:365px){
+    .projects h2{
+        right:30%;
+    }
+    .view-btn {
+        left: 62%;
+    }
+    #ongoing {
+        right: 47%;
+    }
+}
